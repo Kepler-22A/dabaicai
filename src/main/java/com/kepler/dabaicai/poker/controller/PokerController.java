@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,7 @@ public class PokerController {
         return "{\"retCode\":1,\"errMsg\":\"转换成功！\"}";
     }
 
-    @RequestMapping(value = "tell-me-sex")
+    @RequestMapping(method = RequestMethod.GET, value = "tell-me-sex")
     @ResponseBody
     public String tellMeSex(HttpServletRequest request){
         String sex = request.getParameter("sex");
@@ -41,5 +42,15 @@ public class PokerController {
             return "你没有告诉我性别！";
         }
         return "好的，你的性别是："+sex;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "tell-me-age-post")
+    @ResponseBody
+    public String tellMeAgePost(HttpServletRequest request){
+        String sex = request.getParameter("age");
+        if (StringUtils.isBlank(sex)){
+            return "你没有告诉我年龄！";
+        }
+        return "好的，你的年龄是："+sex;
     }
 }
