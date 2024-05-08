@@ -1,10 +1,12 @@
 package com.kepler.dabaicai.poker.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.kepler.dabaicai.poker.dto.TestVO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,11 +48,23 @@ public class PokerController {
 
     @RequestMapping(method = RequestMethod.POST, value = "tell-me-age-post")
     @ResponseBody
-    public String tellMeAgePost(HttpServletRequest request){
-        String sex = request.getParameter("age");
-        if (StringUtils.isBlank(sex)){
+    public String tellMeAgePost(@RequestBody TestVO testVO){
+        String age = testVO.getAge();
+        if (StringUtils.isBlank(age)){
             return "你没有告诉我年龄！";
         }
-        return "好的，你的年龄是："+sex;
+        return "好的，你的年龄是："+age;
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "tell-user-data")
+    @ResponseBody
+    public String tellUserData(@RequestBody TestVO testVO){
+        String height = testVO.getHeight();
+        String sex = testVO.getSex();
+        String age = testVO.getAge();
+        String name = testVO.getName();
+
+        return "好的，你叫："+name+"，性别："+sex+"，年龄："+age+"，身高："+height;
     }
 }

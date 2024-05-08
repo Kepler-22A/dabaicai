@@ -25,6 +25,7 @@
         <jdbc.driver.groupId>mysql</jdbc.driver.groupId>
         <jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
         <jdbc.driver.version>5.1.21</jdbc.driver.version>
+        <jackson.version>2.13.3</jackson.version>
     </properties>
     <dependencies>
         <dependency>
@@ -66,6 +67,23 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.70</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
 
         <!-- WEB begin -->
         <dependency>
