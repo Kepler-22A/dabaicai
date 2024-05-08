@@ -2,8 +2,8 @@ package com.kepler.dabaicai.poker.dto;
 
 public class TestVO {
     private String sex;
-    private String age;
-    private String height;
+    private Integer age;
+    private Integer height;
     private String name;
 
     public String getSex() {
@@ -14,19 +14,19 @@ public class TestVO {
         this.sex = sex;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
-    public String getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(Integer height) {
         this.height = height;
     }
 

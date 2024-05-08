@@ -1,6 +1,7 @@
 package com.kepler.dabaicai.poker.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.kepler.dabaicai.poker.dto.ResultBaseVO;
 import com.kepler.dabaicai.poker.dto.TestVO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -38,33 +39,84 @@ public class PokerController {
 
     @RequestMapping(method = RequestMethod.GET, value = "tell-me-sex")
     @ResponseBody
-    public String tellMeSex(HttpServletRequest request){
+    public ResultBaseVO tellMeSex(HttpServletRequest request){
         String sex = request.getParameter("sex");
+        ResultBaseVO resultBaseVO = new ResultBaseVO(ResultBaseVO.CODE_SUCCESS, ResultBaseVO.MESSAGE_SUCCESS);
         if (StringUtils.isBlank(sex)){
-            return "你没有告诉我性别！";
+            resultBaseVO.setCode(ResultBaseVO.CODE_FAILED);
+            resultBaseVO.setMessage(ResultBaseVO.MESSAGE_FAILED);
+            resultBaseVO.setData("你没有告诉我性别！");
+        }else {
+            resultBaseVO.setData("好的，你的性别是："+sex);
         }
-        return "好的，你的性别是："+sex;
+        return resultBaseVO;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "tell-me-name-post")
+    @ResponseBody
+    public ResultBaseVO tellMeNamePost(@RequestBody TestVO testVO){
+        String name = testVO.getName();
+        ResultBaseVO resultBaseVO = new ResultBaseVO(ResultBaseVO.CODE_SUCCESS, ResultBaseVO.MESSAGE_SUCCESS);
+        if (StringUtils.isBlank(name)){
+            resultBaseVO.setCode(ResultBaseVO.CODE_FAILED);
+            resultBaseVO.setMessage(ResultBaseVO.MESSAGE_FAILED);
+            resultBaseVO.setData("你没有告诉我名字！");
+        }else {
+            resultBaseVO.setData("好的，你的名字是："+name);
+        }
+        return resultBaseVO;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "tell-me-age-post")
     @ResponseBody
-    public String tellMeAgePost(@RequestBody TestVO testVO){
-        String age = testVO.getAge();
-        if (StringUtils.isBlank(age)){
-            return "你没有告诉我年龄！";
+    public ResultBaseVO tellMeAgePost(@RequestBody TestVO testVO){
+        Integer age = testVO.getAge();
+        ResultBaseVO resultBaseVO = new ResultBaseVO(ResultBaseVO.CODE_SUCCESS, ResultBaseVO.MESSAGE_SUCCESS);
+        if (null == age){
+            resultBaseVO.setCode(ResultBaseVO.CODE_FAILED);
+            resultBaseVO.setMessage(ResultBaseVO.MESSAGE_FAILED);
+            resultBaseVO.setData("你没有告诉我年龄！");
+        }else {
+            resultBaseVO.setData("好的，你的年龄是："+age);
         }
-        return "好的，你的年龄是："+age;
+        return resultBaseVO;
     }
 
 
     @RequestMapping(method = RequestMethod.POST, value = "tell-user-data")
     @ResponseBody
-    public String tellUserData(@RequestBody TestVO testVO){
-        String height = testVO.getHeight();
+    public ResultBaseVO tellUserData(@RequestBody TestVO testVO){
+        Integer height = testVO.getHeight();
         String sex = testVO.getSex();
-        String age = testVO.getAge();
+        Integer age = testVO.getAge();
         String name = testVO.getName();
+        ResultBaseVO resultBaseVO = new ResultBaseVO(ResultBaseVO.CODE_SUCCESS, ResultBaseVO.MESSAGE_SUCCESS);
+        if (null == height){
+            resultBaseVO.setCode(ResultBaseVO.CODE_FAILED);
+            resultBaseVO.setMessage(ResultBaseVO.MESSAGE_FAILED);
+            resultBaseVO.setData("你没有告诉我身高！");
+            return resultBaseVO;
+        }
+        if (StringUtils.isBlank(sex)){
+            resultBaseVO.setCode(ResultBaseVO.CODE_FAILED);
+            resultBaseVO.setMessage(ResultBaseVO.MESSAGE_FAILED);
+            resultBaseVO.setData("你没有告诉我性别！");
+            return resultBaseVO;
+        }
+        if (null == age){
+            resultBaseVO.setCode(ResultBaseVO.CODE_FAILED);
+            resultBaseVO.setMessage(ResultBaseVO.MESSAGE_FAILED);
+            resultBaseVO.setData("你没有告诉我年龄！");
+            return resultBaseVO;
+        }
+        if (StringUtils.isBlank(name)){
+            resultBaseVO.setCode(ResultBaseVO.CODE_FAILED);
+            resultBaseVO.setMessage(ResultBaseVO.MESSAGE_FAILED);
+            resultBaseVO.setData("你没有告诉我名字！");
+            return resultBaseVO;
+        }
 
-        return "好的，你叫："+name+"，性别："+sex+"，年龄："+age+"，身高："+height;
+        resultBaseVO.setData("好的，你叫："+name+"，性别："+sex+"，年龄："+age+"岁，身高："+height+"公分");
+        return resultBaseVO;
     }
 }
